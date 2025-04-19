@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HotelierProject.DataAccess\HotelierProject.DataAccess.csproj" />
+    <ProjectReference Include="..\HotelierProject.EntityLayer\HotelierProject.EntityLayer.csproj" />
+  </ItemGroup>
+
+</Project>
