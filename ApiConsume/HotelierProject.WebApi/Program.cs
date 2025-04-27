@@ -1,4 +1,9 @@
+using HotelierProject.BusinessLayer.Abstract;
+using HotelierProject.BusinessLayer.Concrete;
+using HotelierProject.DataAccess.Abstract;
 using HotelierProject.DataAccess.Concrete;
+using HotelierProject.DataAccess.EntityFramework;
+using HotelierProject.DataAccess.Repositories;
 using HotelierProject.EntityLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +21,17 @@ builder.Services.AddDbContext<HotelContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"));
 });
+builder.Services.AddScoped(typeof(IGenericDal<>), typeof(GenericRepository<>));
 
+builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericManager<>));
+
+builder.Services.AddCors(opt=>
+{
+    opt.AddPolicy("HotelApi", opts =>
+    {
+        opts.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -28,7 +43,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("HotelApi");
 app.UseAuthorization();
 
 app.MapControllers();
